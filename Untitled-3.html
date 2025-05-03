@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CSS Animation with Local Storage</title>
+  <style>
+    /* Include the CSS from step 1 here */
+    .animated-button {
+      background-color: #4CAF50; /* Green */
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .animated-button.pulse {
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.1);
+        opacity: 0.7;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <button id="animatedButton" class="animated-button">Animate Me!</button>
+  <button id="toggleAnimationButton">Toggle Animation</button>
+
+  <script>
+    const animatedButton = document.getElementById('animatedButton');
+    const toggleButton = document.getElementById('toggleAnimationButton');
+
+    function saveAnimationPreference(enabled) {
+      localStorage.setItem('animationEnabled', JSON.stringify(enabled));
+    }
+
+    function getAnimationPreference() {
+      const preference = localStorage.getItem('animationEnabled');
+      return preference === null ? true : JSON.parse(preference);
+    }
+
+    function applyAnimationPreference() {
+      const animationEnabled = getAnimationPreference();
+      if (animationEnabled) {
+        animatedButton.classList.add('pulse');
+      } else {
+        animatedButton.classList.remove('pulse');
+      }
+    }
+
+    // Apply the preference on page load
+    applyAnimationPreference();
+
+    // Toggle animation on button click
+    toggleButton.addEventListener('click', () => {
+      const isCurrentlyAnimated = animatedButton.classList.contains('pulse');
+      animatedButton.classList.toggle('pulse');
+      saveAnimationPreference(!isCurrentlyAnimated);
+    });
+  </script>
+
+</body>
+</html>

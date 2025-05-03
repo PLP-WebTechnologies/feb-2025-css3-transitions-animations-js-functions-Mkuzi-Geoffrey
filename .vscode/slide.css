@@ -1,0 +1,15 @@
+.slide-in-container {
+  width: 200px;
+  overflow: hidden; /* Hide the image when it's outside the container */
+  margin-bottom: 20px;
+}
+
+.slide-in-image {
+  width: 100%;
+  transform: translateX(-200px); /* Start off-screen to the left */
+  transition: transform 0.5s ease-out; /* Smooth transition for sliding */
+}
+
+.slide-in-image.visible {
+  transform: translateX(0); /* Slide into view */
+}
